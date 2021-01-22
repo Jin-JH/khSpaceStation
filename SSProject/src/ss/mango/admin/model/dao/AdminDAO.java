@@ -15,6 +15,7 @@ import ss.mango.admin.model.vo.Partner;
 import ss.mango.admin.model.vo.ResInfo;
 import ss.mango.admin.model.vo.Reservation;
 import ss.mango.admin.model.vo.SpaceRegistration;
+import ss.mango.admin.model.vo.SpaceRegistration1;
 import ss.mango.admin.model.vo.SubSpace;
 import ss.mango.admin.model.vo.User;
 import ss.mango.common.JDBCTemplate;
@@ -1872,18 +1873,16 @@ public ArrayList<SpaceRegistration> selectSpaceRegistration(Connection conn) {
 	}
 	
 	//결제 승인
-	public ArrayList<SpaceRegistration> calculateApprovalSpace(Connection conn) {
+	public ArrayList<SpaceRegistration1> calculateApprovalSpace(Connection conn) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		SpaceRegistration sr = null;
+				
+		ArrayList<SpaceRegistration1> srList = new ArrayList<SpaceRegistration1>();
 		
-		ArrayList<SpaceRegistration> srList = new ArrayList<SpaceRegistration>();
-		
-		String query = "select spaceName, NVL(sum(userCost),0) as allCost from reservation " + 
-						"left join subSpace using (subNo) " + 
-						"left join spaceRegistration using (spaceNo) " + 
-						"WHERE (extract (month from resDate)=extract (month from sysDate)-1) " + 
+		String query = "select spaceName, NVL(sum(userCost),0) as allCost from reservation " +
+						"left join subSpace using (subNo) left join spaceRegistration using (spaceNo) " + 
+						"WHERE TO_CHAR(resDate,'YYYYMM')=TO_CHAR(TO_DATE(TO_CHAR(SYSDATE,'YYYYMM'),'YYYYMM')-1, 'YYYYMM') " +
 						"group by spaceName";
 
 		try {
@@ -1891,8 +1890,7 @@ public ArrayList<SpaceRegistration> selectSpaceRegistration(Connection conn) {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				
-				sr = new SpaceRegistration();				
+				SpaceRegistration1 sr = new SpaceRegistration1();
 				sr.setSpaceName(rset.getString("spaceName"));
 				sr.setAllCost(rset.getInt("allCost"));
 				
@@ -1906,6 +1904,7 @@ public ArrayList<SpaceRegistration> selectSpaceRegistration(Connection conn) {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}//try, catch, finally
+		System.out.println(srList);
 		return srList;
 	}// calculateApprovalSpace
 	
@@ -2031,10 +2030,9 @@ public ArrayList<SpaceRegistration> selectSpaceRegistration(Connection conn) {
 		try {
 			stmt = conn.createStatement();
 			
-			String query = "select spaceName, NVL(sum(userCost),0) as allCost from reservation " + 
-							"left join subSpace using (subNo) " + 
-							"left join spaceRegistration using (spaceNo) " + 
-							"WHERE (extract (month from resDate)=extract (month from sysDate)-1) " + 							
+			String query = "select spaceName, NVL(sum(userCost),0) as allCost from reservation " +
+							"left join subSpace using (subNo) left join spaceRegistration using (spaceNo) " + 
+							"WHERE TO_CHAR(resDate,'YYYYMM')=TO_CHAR(TO_DATE(TO_CHAR(SYSDATE,'YYYYMM'),'YYYYMM')-1, 'YYYYMM') " +
 							"group by spaceName";
 			
 			rset = stmt.executeQuery(query);	
@@ -2049,6 +2047,7 @@ public ArrayList<SpaceRegistration> selectSpaceRegistration(Connection conn) {
 				
 			}// while
 			
+			System.out.println(srList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ss.mango.admin.model.service.AdminService;
 import ss.mango.admin.model.vo.CalculateInfo;
 import ss.mango.admin.model.vo.SpaceRegistration;
+import ss.mango.admin.model.vo.SpaceRegistration1;
 
 /**
  * Servlet implementation class CalculateApproval
@@ -34,9 +35,10 @@ public class CalculateApprovalServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<SpaceRegistration> srList = new AdminService().calculateApprovalSpace();
+		ArrayList<SpaceRegistration1> srList = new AdminService().calculateApprovalSpace();
 		ArrayList<CalculateInfo> ciList = new AdminService().calculateApprovalInfo();
-		
+		System.out.println(srList);
+		System.out.println(ciList);
 		RequestDispatcher view = request.getRequestDispatcher("/views/admin/pManage/pManageCalculateApproval.jsp");
 		request.setAttribute("srList",srList);
 		request.setAttribute("ciList",ciList);

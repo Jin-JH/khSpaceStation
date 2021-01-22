@@ -9,7 +9,7 @@ public class SpaceRegistration { //제 공간 등록 VO객체는 변수 9개 있
 	private String spaceAddress;
 	private Date spaceDate;
 	private char spaceDel;
-	private Date SpaceDelDate;
+	private Date spaceDelDate;
 	private char spaceAprync;
 	private String memberCode;
 	private int allCost;
@@ -27,7 +27,7 @@ public class SpaceRegistration { //제 공간 등록 VO객체는 변수 9개 있
 		this.spaceAddress = spaceAddress;
 		this.spaceDate = spaceDate;
 		this.spaceDel = spaceDel;
-		this.SpaceDelDate = spaceDelDate;
+		this.spaceDelDate = spaceDelDate;
 		this.spaceAprync = spaceAprync;
 		this.memberCode = memberCode;
 		this.allCost = allCost;
@@ -70,10 +70,10 @@ public class SpaceRegistration { //제 공간 등록 VO객체는 변수 9개 있
 		this.spaceDel = spaceDel;
 	}
 	public Date getSpaceDelDate() {
-		return SpaceDelDate;
+		return spaceDelDate;
 	}
 	public void setSpaceDelDate(Date spaceDelDate) {
-		SpaceDelDate = spaceDelDate;
+		this.spaceDelDate = spaceDelDate;
 	}
 	public char getSpaceAprync() {
 		return spaceAprync;

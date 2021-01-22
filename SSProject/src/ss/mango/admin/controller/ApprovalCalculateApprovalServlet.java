@@ -46,7 +46,6 @@ public class ApprovalCalculateApprovalServlet extends HttpServlet {
 		double feeCost = allCost*0.1;
 		int result;
 		String aprovType;
-		
 		if(appr.equals("정산")) {
 			result = new AdminService().RecordCalculate(adminCode,memberCode,calCost,feeCost);
 			aprovType="사업자 정산 완료";

@@ -15,6 +15,7 @@ import ss.mango.admin.model.vo.PartnerListPageData;
 import ss.mango.admin.model.vo.ResInfo;
 import ss.mango.admin.model.vo.Reservation;
 import ss.mango.admin.model.vo.SpaceRegistration;
+import ss.mango.admin.model.vo.SpaceRegistration1;
 import ss.mango.admin.model.vo.SubSpace;
 import ss.mango.admin.model.vo.User;
 import ss.mango.admin.model.vo.UserPageData;
@@ -437,9 +438,9 @@ public class AdminService {
 	}// userSearchTotalCount
 	
 	//정산승인
-	public ArrayList<SpaceRegistration> calculateApprovalSpace() {
+	public ArrayList<SpaceRegistration1> calculateApprovalSpace() {
 		Connection conn = JDBCTemplate.getConnection();
-		ArrayList<SpaceRegistration> srList = adminDAO.calculateApprovalSpace(conn);
+		ArrayList<SpaceRegistration1> srList = adminDAO.calculateApprovalSpace(conn);
 		JDBCTemplate.close(conn);
 		return srList;
 	}// calculateApprovalSpace

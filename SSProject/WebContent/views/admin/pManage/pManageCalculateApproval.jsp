@@ -46,7 +46,7 @@
 				        	<th>은행명</th>
 				        	<th>예금주</th>
 				        	<th>계좌 번호</th>
-				        	<!-- <th>정산 금액</th> -->
+				        	<th>정산 금액</th>
 				        	<th>정산 발행일</th>
 	                        <th>정산일</th>
 	                        <th>정산</th>  
@@ -58,25 +58,25 @@
 				        	</c:when>
 							<c:otherwise>
 			              				        		
-				        		<c:forEach items="${ciList }" var="ci" varStatus="i" step="1">
+				        		<c:forEach items="${ciList }" var="ci">
 					        		<tr>
 					     				<td>${ci.memberId }</td>
 							        	<td>${ci.spaceName }</td>
 							        	<td>${ci.calBank }</td>
 				                        <td>${ci.calHolder }</td>
 				                        <td>${ci.calAccount }</td>
-				                        
-											<c:forEach items="${srList }" var="sr" varStatus="j" step="1">
-												<c:choose>
-													<c:when test="${sr.spaceName==ci.spaceName }">
-														<!--<td>${sr.calCost }</td>	  -->		
-													</c:when>
-													<c:otherwise>
-														<td>없음</td>
-													</c:otherwise>
-												</c:choose>	
-											</c:forEach>
-				                        				                        
+				                     
+				                     	<c:choose>
+								        	<c:when test="${empty srList}">
+								        		<td>0</td>
+								        	</c:when>
+											<c:otherwise>
+												 <c:forEach items="${srList }" var="sr">
+						                        	<td>${sr.allCost }</td>
+						                        </c:forEach>
+											</c:otherwise>
+										</c:choose>
+				                       
 				                        <td>			                        	
 				                        	매달 말일
 										</td>
@@ -92,7 +92,8 @@
 				     									onclick="test(${srList[i.index].allCost }, ${p.memberCode})"/>
 				     							</form>
 				     						-->
-				     						<input type = "submit" class="apprBtn apprStateForm apprCal" name="appr" value="정산" style="margin : 5px;" onclick="record(${srList[i.index].allCost }, '${ci.memberCode }')"/>
+				     						<input type = "submit" class="apprBtn apprStateForm apprCal" name="appr" value="정산"
+				     								onclick="record(${srList[i.index].allCost }, '${ci.memberCode }')"/>
 					     				</td>
 					      			</tr>
 				      			</c:forEach>
